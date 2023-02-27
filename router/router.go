@@ -8,4 +8,5 @@ import (
 func BuildRoutes() {
 	http.HandleFunc("/", handler.HomeHandler)
 	http.HandleFunc("/classic", handler.Classic)
+	http.HandleFunc("/play", handler.ClassicPlay)
 }
