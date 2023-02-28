@@ -42,10 +42,24 @@ function foo()
         piece2 = $('#piece2').val();
         piece3 = $('#piece3').val();
         piece4 = $('#piece4').val();
-        if((piece1 == piece2) || (piece1 == piece3) ||(piece1 == piece4) ||(piece2 == piece3) || (piece2 == piece4) || (piece3 == piece4))
-        {
-            alert('2 Players cannot have same piece');
-            return;
+        if (players == 2){
+            if(piece1 == piece2)
+            {
+                alert('2 Players cannot have same piece');
+                return;
+            }   
+        }else if (players == 3){
+            if((piece1 == piece2) || (piece1 == piece3) || (piece2 == piece3))
+            {
+                alert('2 Players cannot have same piece');
+                return;
+            }
+        }else if (players == 4) {
+            if((piece1 == piece2) || (piece1 == piece3) ||(piece1 == piece4) ||(piece2 == piece3) || (piece2 == piece4) || (piece3 == piece4))
+            {
+                alert('2 Players cannot have same piece');
+                return;
+            }
         }
         $('#aplayers_num').val(players);
         $('#aplayer_1_name').val(player_1_name);

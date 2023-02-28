@@ -1,10 +1,26 @@
 package handler
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"path/filepath"
+	"strconv"
 	"text/template"
 )
+
+type DATA struct {
+	Num     int
+	Players []Player
+	Message string
+}
+
+type Player struct {
+	Name    string `json:"name"`
+	Piece   string `json:"piece"`
+	Balance int    `json:"balance"`
+	Color   string
+}
 
 func HomeHandler(res http.ResponseWriter, req *http.Request) {
 	if req.URL.Path != "/" {
@@ -58,13 +74,73 @@ func ClassicPlay(res http.ResponseWriter, req *http.Request) {
 		return
 	}
 	if req.Method == "POST" {
-		// lp := filepath.Join("templates", "templates/layout.html")
-		// fp := filepath.Join("templates", "templates/classicPlay.html")
-
-		tmpl, err := template.ParseFiles("templates/layout.html", "templates/classicPlay.html")
+		num, err := strconv.Atoi(req.FormValue("aplayers_num"))
 		if err != nil {
 			log.Fatal(err)
 		}
-		tmpl.ExecuteTemplate(res, "layout", nil)
+
+		Color := map[int]string{
+			0: "red",
+			1: "green",
+			2: "blue",
+			3: "yellow",
+		}
+		Image := map[int]string{
+			0: "hat",
+			1: "dog",
+			2: "car",
+			3: "boat",
+		}
+
+		var Players []Player
+		for i := 0; i < num; i++ {
+			var playerTemp Player
+
+			s := fmt.Sprint("aplayer_", i+1, "_name")
+			p := fmt.Sprint("apiece", i+1)
+
+			playerTemp.Name = req.FormValue(s)
+			piece, err := strconv.Atoi(req.FormValue(p))
+			if err != nil {
+				log.Fatal(err)
+			}
+			playerTemp.Piece = Image[piece-1]
+			playerTemp.Balance = 1500
+			playerTemp.Color = Color[i]
+
+			Players = append(Players, playerTemp)
+
+			// SetItem(s, playerTemp.name)
+			// SetItem(p, playerTemp.piece)
+		}
+		// fmt.Print(players)
+		// jsonInfo, err := json.Marshal(players)
+		// if err != nil {
+		// 	log.Fatal(err)
+		// }
+		// fmt.Printf("%s\n", jsonInfo)
+
+		lp := filepath.Join("templates", "layout.html")
+		fp := filepath.Join("templates", "classicPlay.html")
+
+		tmpl, err := template.ParseFiles(lp, fp)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		Data := DATA{
+			Num:     num,
+			Players: Players,
+			Message: "Fuck",
+		}
+
+		// tmpl.ExecuteTemplate(res, "layout", Data)
+		// Use this when you are adding define also to the lp file, alse it takes lp file as base file
+		// by this syntax you just specify that start from layout define
+
+		err = tmpl.Execute(res, Data)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }

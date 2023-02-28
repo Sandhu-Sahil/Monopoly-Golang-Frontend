@@ -7,8 +7,24 @@ Classic Monopoly
 {{end}}
 
 {{define "body"}}
-    testing
+<div class="players-flexbox">
+    {{range $index, $player := .Players}}
+        <div class="player-functions">
+        <div class="player-fixed {{ $player.Color }}-card" id="p0">
+            <div class="player-card">
+                <img src="/static/{{ $player.Piece }}.png" width="120px">
+                <h2 style="font-size: 35px;">{{ $player.Name }}</h1>
+                <br>
+                <h2 style="font-size: 30px;">Balance</h1>
+                <h2>{{ $player.Balance }}</h2>
+            </div>
+        </div>
+        
+        </div>
+    {{end}}
+    </div>
 
+    <br><br>
+    <h1 style="font-size: 50px; font-weight: bold; color: red; background-color: rgba(240, 248, 255, 0);">{{.Message}}</h1>
     
-
 {{end}}
