@@ -24,18 +24,14 @@
         <div id="navbar">
             <img onclick="redirect()" src="/static/logo.png" style="width: 25%;">
             <div id="navbar-list">
-                <a href="/home">Home</a>
-                <a href="/listings">Property Listings</a>
-                <a href="/buy-choice">Buy</a>
-                <a href="/sell-choice">Sell</a>
                 {{template "navbar"}}
+                {{template "cube"}}
             </div>
         </div>
 
         <main class="container-fluid py-5 text-center" style="padding-top: 2rem!important;">
             {{template "body" .}}
         </main>
-
     </body>
 
 </html>

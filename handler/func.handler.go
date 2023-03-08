@@ -13,6 +13,7 @@ type DATA struct {
 	Num     int
 	Players []Player
 	Message string
+	Color   [4]string
 }
 
 type Player struct {
@@ -20,6 +21,19 @@ type Player struct {
 	Piece   string `json:"piece"`
 	Balance int    `json:"balance"`
 	Color   string
+}
+
+var color = [4]string{"red", "green", "blue", "yellow"}
+var colors = map[string]string{
+	"purple":  "#67449e",
+	"aqua":    "#5ac9e4",
+	"magenta": "#e843ac",
+	"orange":  "#ff992a",
+	"red":     "#e01f32",
+	"yellow":  "#fece00",
+	"green":   "#579e50",
+	"blue":    "#3160ae",
+	"white":   "#dcdcdc",
 }
 
 func HomeHandler(res http.ResponseWriter, req *http.Request) {
@@ -131,7 +145,8 @@ func ClassicPlay(res http.ResponseWriter, req *http.Request) {
 		Data := DATA{
 			Num:     num,
 			Players: Players,
-			Message: "Fuck",
+			Message: "",
+			Color:   color,
 		}
 
 		// tmpl.ExecuteTemplate(res, "layout", Data)

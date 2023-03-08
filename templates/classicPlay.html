@@ -3,14 +3,19 @@ Classic Monopoly
 {{end}}
 
 {{define "navbar"}}
-    <p id="placeholder">ROLL</p>
+    <a href="/home">Home</a>
+    <a href="/listings">Property Listings</a>
+    <a href="/buy-choice">Buy</a>
+    <a href="/sell-choice">Sell</a>
+    <a>&nbsp;</a>
+    <a>&nbsp;</a>
 {{end}}
 
 {{define "body"}}
 <div class="players-flexbox">
     {{range $index, $player := .Players}}
         <div class="player-functions">
-        <div class="player-fixed {{ $player.Color }}-card" id="p0">
+        <div class="player-fixed {{ $player.Color }}-card" id="p{{$index}}">
             <div class="player-card">
                 <img src="/static/{{ $player.Piece }}.png" width="120px">
                 <h2 style="font-size: 35px;">{{ $player.Name }}</h1>
@@ -18,8 +23,33 @@ Classic Monopoly
                 <h2 style="font-size: 30px;">Balance</h1>
                 <h2>{{ $player.Balance }}</h2>
             </div>
-        </div>
-        
+            <form action="/addMoney" method="post" style="width: 100%;">
+                <button id="a{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Add Money</button>
+                <input type="number" min="0" name="amount" class="hidden a{{$index}}" placeholder="Amount">
+                <input type="number" name="player" style="display: none;" value="{{$index}}">
+                <input type="submit" class="hidden a{{$index}}" value="Add">
+            </form>
+            <form action="/removeMoney" method="post" style="width: 100%">
+                <button id="r{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Lose Money</button><br>
+                <input type="number" min="0" name="amount" class="hidden r{{$index}}" placeholder="Amount" style="width: 60%;">
+                <input type="number" name="player" style="display: none;" value="{{$index}}">
+                <input type="submit" class="hidden r{{$index}}" value="Remove">
+            </form>
+            <form action="/showProperties" method="post" style="width: 100%;">
+                <input type="number" name="player" style="display: none;" value="{{$index}}">
+                <input type="submit" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" value="My Properties">
+            </form>
+            <form action="/payRent" method="post" style="width: 100%; margin-top: 30px;">
+                <button id="p{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Pay Rent</button><br>
+                <input type="number" min="0" name="amount" class="hidden p{{$index}}" placeholder="Amount" style="width: 60%;">
+                <input type="number" name="player" style="display: none;" value="{{$index}}">
+                <select name="other_player" class="hidden p{{$index}}">
+                    <option disabled selected value="">Choose the player</option>
+                
+                </select>
+                <input type="submit" class="hidden p{{$index}}" value="Pay">
+            </form>
+          </div>
         </div>
     {{end}}
     </div>
@@ -27,4 +57,44 @@ Classic Monopoly
     <br><br>
     <h1 style="font-size: 50px; font-weight: bold; color: red; background-color: rgba(240, 248, 255, 0);">{{.Message}}</h1>
     
+{{end}}
+
+{{ define "cube"}}
+<section class="containercube">
+    <div id="cube" onclick="cubeClick()">
+      <div class="front">
+        <span class="dot dot1"></span>
+      </div>
+      <div class="back">
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>
+      </div>
+      <div class="right">
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>  
+        <span class="dot dot3"></span>
+      </div>
+      <div class="left">
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>  
+        <span class="dot dot3"></span>
+        <span class="dot dot4"></span>
+      </div>
+      <div class="top">
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>  
+        <span class="dot dot3"></span>
+        <span class="dot dot4"></span>
+        <span class="dot dot5"></span>
+      </div>
+      <div class="bottom">
+        <span class="dot dot1"></span>
+        <span class="dot dot2"></span>  
+        <span class="dot dot3"></span>
+        <span class="dot dot4"></span>
+        <span class="dot dot5"></span>
+        <span class="dot dot6"></span>
+      </div>
+    </div>
+  </section>
 {{end}}
