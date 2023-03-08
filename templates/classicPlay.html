@@ -21,26 +21,26 @@ Classic Monopoly
                 <h2 style="font-size: 35px;">{{ $player.Name }}</h1>
                 <br>
                 <h2 style="font-size: 30px;">Balance</h1>
-                <h2>{{ $player.Balance }}</h2>
+                <h2 id="balance{{$index}}">{{ $player.Balance }}</h2>
             </div>
-            <form action="/addMoney" method="post" style="width: 100%;">
-                <button id="a{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Add Money</button>
-                <input type="number" min="0" name="amount" class="hidden a{{$index}}" placeholder="Amount">
+            <form onsubmit="addMoney(event)" style="width: 100%;">
+                <button id="a{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-primary-custum btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Add Money</button>
+                <input required id="focusa{{$index}}" type="number" min="0" name="amount" class="hidden a{{$index}}" style="width: 60%;" placeholder="Amount">
                 <input type="number" name="player" style="display: none;" value="{{$index}}">
                 <input type="submit" class="hidden a{{$index}}" value="Add">
             </form>
-            <form action="/removeMoney" method="post" style="width: 100%">
-                <button id="r{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Lose Money</button><br>
-                <input type="number" min="0" name="amount" class="hidden r{{$index}}" placeholder="Amount" style="width: 60%;">
+            <form onsubmit="removeMoney(event)" method="post" style="width: 100%">
+                <button id="r{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-primary-custum btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Lose Money</button><br>
+                <input required id="focusr{{$index}}" type="number" min="0" name="amount" class="hidden r{{$index}}" placeholder="Amount" style="width: 60%;">
                 <input type="number" name="player" style="display: none;" value="{{$index}}">
                 <input type="submit" class="hidden r{{$index}}" value="Remove">
             </form>
             <form action="/showProperties" method="post" style="width: 100%;">
                 <input type="number" name="player" style="display: none;" value="{{$index}}">
-                <input type="submit" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" value="My Properties">
+                <input type="submit" class="{{index .Color}}-btn btn btn-primary btn-primary-custum btn-lg" style="width: 70%;" value="My Properties">
             </form>
             <form action="/payRent" method="post" style="width: 100%; margin-top: 30px;">
-                <button id="p{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Pay Rent</button><br>
+                <button id="p{{$index}}" type="button" class="{{index .Color}}-btn btn btn-primary btn-primary-custum btn-lg" style="width: 70%;" onclick="toggleVisibility(this.id)">Pay Rent</button><br>
                 <input type="number" min="0" name="amount" class="hidden p{{$index}}" placeholder="Amount" style="width: 60%;">
                 <input type="number" name="player" style="display: none;" value="{{$index}}">
                 <select name="other_player" class="hidden p{{$index}}">

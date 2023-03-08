@@ -17,6 +17,7 @@
 
         <title>Monopoly: {{template "title"}}</title>
 
+        <link rel="icon" href="/static/pngegg.png" type="image/x-icon"/>
     </head>
 
     <body onload="foo()" id="template-body">
@@ -27,6 +28,9 @@
                 {{template "navbar"}}
                 {{template "cube"}}
             </div>
+        </div>
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <img src="/static/pngegg.png" width="100px"/>
         </div>
 
         <main class="container-fluid py-5 text-center" style="padding-top: 2rem!important;">

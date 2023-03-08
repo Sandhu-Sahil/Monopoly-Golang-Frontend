@@ -174,10 +174,12 @@ function toggleVisibility(id)
     if($('.'+id).css('visibility')=='hidden')
     {
         $('.'+id).css('visibility', 'visible');
+        document.getElementById("focus"+id).focus();
     }
     else
     {
         $('.'+id).css('visibility', 'hidden');
+        document.getElementById("focus"+id).autofocus = false;
     }
 }
 
@@ -214,4 +216,32 @@ cubeClick = function() {
 
 function getRandom(max, min) {
   return (Math.floor(Math.random() * (max-min)) + min) * 90;
+}
+
+function addMoney(event){
+    event.preventDefault()
+
+    var player = "balance" + event.target.elements.player.value;
+
+    var balance = document.getElementById(player)
+    balance.innerHTML = parseInt(balance.innerHTML) + parseInt(event.target.elements.amount.value)
+
+    event.target.elements.amount.value = ""
+    toggleVisibility("a" + event.target.elements.player.value)
+
+    return false;
+}
+
+function removeMoney(event){
+    event.preventDefault()
+
+    var player = "balance" + event.target.elements.player.value;
+
+    var balance = document.getElementById(player)
+    balance.innerHTML = parseInt(balance.innerHTML) - parseInt(event.target.elements.amount.value)
+
+    event.target.elements.amount.value = ""
+    toggleVisibility("r" + event.target.elements.player.value)
+
+    return false;
 }
